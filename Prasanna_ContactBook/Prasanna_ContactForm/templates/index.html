@@ -1,0 +1,18 @@
+{% extends 'intro.html' %}
+{% block body %}
+<nav class="navbar navbar-light bg-light">
+  <form method="post"action="#" class="d-flex">
+      {{ form.hidden_tag() }}
+
+    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="searched">
+    <button class="btn btn-outline-secondary" type="submit">Search</button>
+  </form>
+</nav>
+<p class="text-right">
+<a href="{{url_for('add_user')}}" class="btn btn-success">Add Contact</a>
+<a href="{{url_for('delete_user')}}" class="btn btn-danger">Delete Contact</a>
+<a href="{{url_for('list')}}" class="btn btn-dark">List of Contacts</a>
+</p>
+<p>
+<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTSuwNoaXwybnhCaHxhJEOBHEecTZMdwsvgpg&usqp=CAU" alt="Image Not Found"></p>
+{% endblock %}

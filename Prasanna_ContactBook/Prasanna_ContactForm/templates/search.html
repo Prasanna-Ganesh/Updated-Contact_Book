@@ -1,0 +1,14 @@
+{% extends 'intro.html' %}
+{% block body %}
+<br/>
+<h2>You Searched a Contact</h2>
+<p>{{ searches }}</p>
+
+            {% for contact in contactsss.search %}
+                {{ contact.id }}
+                {{ contact.name }}
+                {{ contact.phno }}
+                {{ contact.email }}
+            {% endfor %}
+
+{% endblock %}

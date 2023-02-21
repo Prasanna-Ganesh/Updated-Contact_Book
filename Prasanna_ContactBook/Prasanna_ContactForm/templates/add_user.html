@@ -1,0 +1,80 @@
+{% extends 'intro.html' %}
+
+{% block body %}
+<div class="content-section">
+        <form method="POST" action="{{url_for('add_user')}}" enctype="multipart/form-data">
+            {{ form.hidden_tag() }}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Save Contact</legend>
+                <div class="form-group">
+                    <h2>Select a file to upload</h2>
+                    <p>
+                        {% with messages = get_flashed_messages() %}
+                        {% if messages %}
+                        <ul>
+                                {% for message in messages %}
+                                <li>{{ message }}</li>
+                                {% endfor %}
+                        </ul>
+                        {% endif %}
+                        {% endwith %}
+                    </p>
+    {% if filename %}
+        <div class="form-group">
+            <img class="img img-thumbnail" alt="no img" src="{{ url_for('display_image', filename=filename) }}">
+        </div>
+    {% endif %}
+             <dl>
+            <p>
+                <input type="file" name="file" class="form-control" autocomplete="off" required>
+            </p>
+        </dl>
+
+                    {{ form.name.label(class="form-control-label") }}
+
+                    {% if form.name.errors %}
+                        {{ form.name(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.name.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.name(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    {{ form.email.label(class="form-control-label") }}
+                    {% if form.email.errors %}
+                        {{ form.email(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.email.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.email(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    {{ form.phno.label(class="form-control-label") }}
+                    {% if form.phno.errors %}
+                        {{ form.phno(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.phno.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.phno(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+                </fieldset>
+            <div class="form-group">
+                {{ form.submit(class="btn btn-outline-info") }}
+            </div>
+        </form>
+    </div>
+
+
+{% endblock %}

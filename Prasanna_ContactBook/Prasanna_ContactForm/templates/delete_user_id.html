@@ -1,0 +1,25 @@
+{% extends 'intro.html' %}
+{% block body %}
+  <div class='row'>
+    <div class='col-5 mx-auto'>
+      <h3>Delete user</h3><hr>
+      <form method='post' action='/delete_user_id/{{del_by_id.id}}'>
+        <div class='form-group'>
+          <label for="name">User Name</label>
+          <input type='text' name='name' required class='form-control' value='{{del_by_id.name}}'>
+        </div>
+        <div class='form-group'>
+          <label for="phno"l>Contact</label>
+          <input type='text' name='phonenumber' required class='form-control' value='{{del_by_id.phno}}'>
+        </div>
+         <div class='form-group'>
+          <label for="email"l>Email</label>
+          <input type='text' name='email' required class='form-control' value='{{del_by_id.email}}'>
+        </div>
+        <input type='submit' value='Submit' class='btn btn-primary'>
+      </form>
+    </div>
+  </div>
+{% endblock %}
+
+

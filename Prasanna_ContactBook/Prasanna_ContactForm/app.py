@@ -114,6 +114,23 @@ def list():
     page = request.args.get('page', 1, type=int)
     all = Contact.query.order_by(Contact.name).paginate(page=page, per_page=5)
     return render_template('list.html', all=all)
+
+@app.route("/search", methods=['GET', 'POST'])
+def search():
+    if request.method == 'POST':
+        if Contact.query.filter(Contact.name == request.args.get("name")):
+            name = request.args.get("name")
+            a = Contact.query.filter_by(name=name).all()
+            db.session.commit()
+            return render_template('search.html', all=a)
+
+        else:
+            flash('No such contact', 'error')
+            return render_template('index.html')
+
+    return render_template('search.html')
+
+
 @app.route("/all_contact")
 def all_contact():
     all = Contact.query.all()

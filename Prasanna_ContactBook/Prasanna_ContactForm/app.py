@@ -5,14 +5,17 @@ from Prasanna_ContactForm import app,db
 from Prasanna_ContactForm.models import Contact
 import os
 
+
 @app.route("/")
 def index():
     return render_template("index.html")
+
 
 @app.context_processor
 def intro():
      form = AdduserForm()
      return dict(form=form)
+
 
 @app.route("/add_user", methods=["GET","POST"])
 def add_user():
@@ -43,9 +46,11 @@ def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
 
+
 @app.route('/display/<filename>')
 def display_image(filename):
     return redirect(url_for('static', filename='uploads/' + filename), code=301)
+
 
 @app.route("/edit_user/<int:id>",methods=["GET","POST"])
 def edit_user(id):
@@ -83,6 +88,7 @@ def edit_user(id):
 
     return render_template('edit_user.html')
 
+
 @app.route("/delete_user",methods=["GET","POST"])
 def delete_user():
     if request.method=="POST":
@@ -96,6 +102,8 @@ def delete_user():
     else:
         flash("Contact Not Found","dark")
     return render_template('delete_user.html')
+
+
 @app.route("/delete_user_id<int:id>",methods=["GET","POST"])
 def delete_user_id(id):
     del_by_id = Contact.query.get(id)
@@ -109,32 +117,28 @@ def delete_user_id(id):
 
     return render_template('delete_user_id.html',del_by_id=del_by_id)
 
+
 @app.route("/list.html")
 def list():
     page = request.args.get('page', 1, type=int)
     all = Contact.query.order_by(Contact.name).paginate(page=page, per_page=5)
     return render_template('list.html', all=all)
 
+
 @app.route("/search", methods=['GET', 'POST'])
 def search():
-    if request.method == 'POST':
-        if Contact.query.filter(Contact.name == request.args.get("name")):
-            name = request.args.get("name")
-            a = Contact.query.filter_by(name=name).all()
-            db.session.commit()
-            return render_template('search.html', all=a)
-
-        else:
-            flash('No such contact', 'error')
-            return render_template('index.html')
-
-    return render_template('search.html')
+    if request.method == "POST":
+        searched = request.form.get('searched')
+        all = Contact.query.filter(Contact.name.ilike(f"%{searched}%")).all()
+        return render_template("search.html", all=all)
+    return render_template("search.html")
 
 
 @app.route("/all_contact")
 def all_contact():
     all = Contact.query.all()
     return render_template('all_contact.html',all=all)
+
 
 if __name__=='__main__':
     app.secret_key='admin123'
